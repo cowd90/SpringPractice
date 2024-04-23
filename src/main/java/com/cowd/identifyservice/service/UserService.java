@@ -3,6 +3,8 @@ package com.cowd.identifyservice.service;
 import com.cowd.identifyservice.dto.request.UserCreationRequest;
 import com.cowd.identifyservice.dto.request.UserUpdateRequest;
 import com.cowd.identifyservice.entity.User;
+import com.cowd.identifyservice.exception.AppException;
+import com.cowd.identifyservice.exception.ErrorCode;
 import com.cowd.identifyservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,7 @@ public class UserService {
         User user = new User();
 
         if (userRepository.existsByUsername(request.getUsername())) {
-            throw new RuntimeException("Username already exists!");
+            throw new AppException(ErrorCode.USER_EXIST);
         }
 
         user.setUsername(request.getUsername());

@@ -1,5 +1,6 @@
 package com.cowd.identifyservice.controller;
 
+import com.cowd.identifyservice.dto.request.ApiResponse;
 import com.cowd.identifyservice.dto.request.UserCreationRequest;
 import com.cowd.identifyservice.dto.request.UserUpdateRequest;
 import com.cowd.identifyservice.entity.User;
@@ -17,8 +18,11 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    User createUser(@RequestBody @Valid UserCreationRequest request) {
-        return userService.createUser(request);
+    ApiResponse<User> createUser(@RequestBody @Valid UserCreationRequest request) {
+        ApiResponse<User> response = new ApiResponse<>();
+        response.setResult(userService.createUser(request));
+
+        return response;
     }
 
     @GetMapping
