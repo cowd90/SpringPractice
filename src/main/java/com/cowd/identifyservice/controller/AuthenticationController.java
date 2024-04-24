@@ -2,7 +2,9 @@ package com.cowd.identifyservice.controller;
 
 import com.cowd.identifyservice.dto.request.ApiResponse;
 import com.cowd.identifyservice.dto.request.AuthenticationRequest;
+import com.cowd.identifyservice.dto.request.IntrospectRequest;
 import com.cowd.identifyservice.dto.response.AuthenticationResponse;
+import com.cowd.identifyservice.dto.response.IntrospectResponse;
 import com.cowd.identifyservice.service.AuthenticationService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -19,13 +21,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
     AuthenticationService authenticationService;
 
-    @PostMapping("/login")
+    @PostMapping("/token")
     ApiResponse<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
-        boolean result = authenticationService.authenticate(request);
+        var result = authenticationService.authenticate(request);
         return ApiResponse.<AuthenticationResponse>builder()
-                .result(AuthenticationResponse.builder()
-                        .authenticated(result)
-                        .build())
+                .result(result)
+                .build();
+    }
+
+    @PostMapping("/introspect")
+    ApiResponse<IntrospectResponse> authenticate(@RequestBody IntrospectRequest request) {
+        var result = authenticationService.introspect(request);
+        return ApiResponse.<IntrospectResponse>builder()
+                .result(result)
                 .build();
     }
 }
