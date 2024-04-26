@@ -1,9 +1,11 @@
 package com.cowd.identifyservice.service;
 
+import com.cowd.identifyservice.dto.request.ApiResponse;
 import com.cowd.identifyservice.dto.request.UserCreationRequest;
 import com.cowd.identifyservice.dto.request.UserUpdateRequest;
 import com.cowd.identifyservice.dto.response.UserResponse;
 import com.cowd.identifyservice.entity.User;
+import com.cowd.identifyservice.enums.Role;
 import com.cowd.identifyservice.exception.AppException;
 import com.cowd.identifyservice.exception.ErrorCode;
 import com.cowd.identifyservice.mapper.UserMapper;
@@ -16,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -24,22 +27,28 @@ import java.util.List;
 public class UserService {
     UserRepository userRepository;
     UserMapper userMapper;
+    PasswordEncoder passwordEncoder;
 
-    public User createUser(UserCreationRequest request) {
+    public UserResponse createUser(UserCreationRequest request) {
 
         if (userRepository.existsByUsername(request.getUsername())) {
             throw new AppException(ErrorCode.USER_EXIST);
         }
 
         User user = userMapper.toUser(request);
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
-        return userRepository.save(user);
+        HashSet<String> roles = new HashSet<>();
+        roles.add(Role.USER.name());
+
+        user.setRoles(roles);
+
+        return userMapper.toUserResponse(userRepository.save(user));
     }
 
-    public List<User> getUsers() {
-        return userRepository.findAll();
+    public List<UserResponse> getUsers() {
+        return userRepository.findAll().stream()
+                .map(userMapper::toUserResponse).toList();
     }
 
     public UserResponse getUser(String id) {
