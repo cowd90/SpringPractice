@@ -20,5 +20,5 @@ public class UserResponse {
     String lastName;
     LocalDate dob;
     @ElementCollection
-    Set<String> roles;
+    Set<RoleResponse> roles;
 }
