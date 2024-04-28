@@ -1,5 +1,6 @@
 package com.cowd.identifyservice.dto.request;
 
+import com.cowd.identifyservice.validator.DobConstraint;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -13,8 +14,13 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserUpdateRequest {
     String password;
+
     String firstName;
+
     String lastName;
+
+    @DobConstraint(min = 18, message = "INVALID_DOB")
     LocalDate dob;
+
     List<String> roles;
 }
