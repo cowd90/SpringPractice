@@ -14,21 +14,12 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class User {
+public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    String id;
+    String name;
 
-    String username;
-
-    String password;
-
-    String firstName;
-
-    String lastName;
-
-    LocalDate dob;
+    String description;
 
     @ManyToMany
-    Set<Role> roles;
+    Set<Permission> permissions;
 }
