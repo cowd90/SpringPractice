@@ -11,8 +11,8 @@
     <groupId>com.cowd</groupId>
     <artifactId>IdentityService</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>IdentifyService</name>
-    <description>IdentifyService</description>
+    <name>IdentityService</name>
+    <description>IdentityService</description>
     <properties>
         <java.version>21</java.version>
         <projectlombok-lombok.version>1.18.30</projectlombok-lombok.version>
@@ -81,7 +81,11 @@
             <version>2.2.224</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -101,7 +105,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
+                <version>3.11.0</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
@@ -149,10 +153,10 @@
                 </executions>
                 <configuration>
                     <excludes>
-<!--                        <exclude>com/cowd/identityservice/dto/**</exclude>-->
-<!--                        <exclude>com/cowd/identityservice/entity/**</exclude>-->
-<!--                        <exclude>com/cowd/identityservice/mapper/**</exclude>-->
-<!--                        <exclude>com/cowd/identityservice/configuration/**</exclude>-->
+                        <exclude>com/cowd/identityservice/dto/**</exclude>
+                        <exclude>com/cowd/identityservice/entity/**</exclude>
+                        <exclude>com/cowd/identityservice/mapper/**</exclude>
+                        <exclude>com/cowd/identityservice/configuration/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>
