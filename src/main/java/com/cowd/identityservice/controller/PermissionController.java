@@ -1,15 +1,17 @@
 package com.cowd.identityservice.controller;
 
+import java.util.List;
+
+import org.springframework.web.bind.annotation.*;
+
 import com.cowd.identityservice.dto.request.ApiResponse;
 import com.cowd.identityservice.dto.request.PermissionRequest;
 import com.cowd.identityservice.dto.response.PermissionResponse;
 import com.cowd.identityservice.service.PermissionService;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/permissions")
@@ -37,5 +39,4 @@ public class PermissionController {
         permissionService.delete(permission);
         return ApiResponse.<Void>builder().build();
     }
-
 }

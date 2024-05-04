@@ -1,19 +1,22 @@
 package com.cowd.identityservice.controller;
 
+import java.util.List;
+
+import jakarta.validation.Valid;
+
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
+
 import com.cowd.identityservice.dto.request.ApiResponse;
 import com.cowd.identityservice.dto.request.UserCreationRequest;
 import com.cowd.identityservice.dto.request.UserUpdateRequest;
 import com.cowd.identityservice.dto.response.UserResponse;
 import com.cowd.identityservice.service.UserService;
-import jakarta.validation.Valid;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -58,8 +61,7 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    UserResponse updateUser(@RequestBody UserUpdateRequest request,
-                    @PathVariable("userId") String id) {
+    UserResponse updateUser(@RequestBody UserUpdateRequest request, @PathVariable("userId") String id) {
         return userService.updateUser(id, request);
     }
 
@@ -68,5 +70,4 @@ public class UserController {
         userService.deleteUser(id);
         return "User has been deleted!";
     }
-
 }

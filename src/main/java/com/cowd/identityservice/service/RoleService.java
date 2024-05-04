@@ -1,18 +1,20 @@
 package com.cowd.identityservice.service;
 
+import java.util.HashSet;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.cowd.identityservice.dto.request.RoleRequest;
 import com.cowd.identityservice.dto.response.RoleResponse;
 import com.cowd.identityservice.entity.Role;
 import com.cowd.identityservice.mapper.RoleMapper;
 import com.cowd.identityservice.repository.PermissionRepository;
 import com.cowd.identityservice.repository.RoleRepository;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.stereotype.Service;
-
-import java.util.HashSet;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -33,13 +35,10 @@ public class RoleService {
     }
 
     public List<RoleResponse> getAll() {
-        return roleRepository.findAll()
-                .stream().map(roleMapper::toRoleResponse)
-                .toList();
+        return roleRepository.findAll().stream().map(roleMapper::toRoleResponse).toList();
     }
 
     public void delete(String role) {
         roleRepository.deleteById(role);
     }
-
 }

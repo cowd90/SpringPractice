@@ -1,10 +1,12 @@
 package com.cowd.identityservice.service;
 
-import com.cowd.identityservice.dto.request.UserCreationRequest;
-import com.cowd.identityservice.dto.response.UserResponse;
-import com.cowd.identityservice.entity.User;
-import com.cowd.identityservice.exception.AppException;
-import com.cowd.identityservice.repository.UserRepository;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
+
+import java.time.LocalDate;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,12 +15,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.TestPropertySource;
 
-import java.time.LocalDate;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import com.cowd.identityservice.dto.request.UserCreationRequest;
+import com.cowd.identityservice.dto.response.UserResponse;
+import com.cowd.identityservice.entity.User;
+import com.cowd.identityservice.exception.AppException;
+import com.cowd.identityservice.repository.UserRepository;
 
 @SpringBootTest
 @TestPropertySource("/test.properties")
@@ -75,7 +76,6 @@ public class UserServiceTest {
         // THEN
         Assertions.assertThat(response.getId()).isEqualTo("sdjkzghzg");
         Assertions.assertThat(response.getUsername()).isEqualTo("scottd980");
-
     }
 
     @Test
@@ -84,12 +84,8 @@ public class UserServiceTest {
         when(userRepository.existsByUsername(anyString())).thenReturn(true);
 
         // WHEN
-        var exception = assertThrows(AppException.class,
-                () -> userService.createUser(request));
+        var exception = assertThrows(AppException.class, () -> userService.createUser(request));
 
-        Assertions.assertThat(exception.getErrorCode().getCode())
-                .isEqualTo(1002);
-
+        Assertions.assertThat(exception.getErrorCode().getCode()).isEqualTo(1002);
     }
-
 }
